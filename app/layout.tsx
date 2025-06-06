@@ -9,7 +9,7 @@ const openSans = Open_Sans({
 
 export const metadata: Metadata = {
   title: "Lucy's Cauldron",
-  description: "All-Natural Artisinal Soap",
+  description: "Buy All-Natural Artisinal Soap",
 };
 
 export default function RootLayout({

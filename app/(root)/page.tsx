@@ -4,7 +4,6 @@ import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { PRODUCT_QUERY } from "@/sanity/lib/queries";
 import { Product } from "@/sanity/types";
 import HeroBanner from "@/components/HeroBanner";
-import FooterBanner from "@/components/FooterBanner";
 
 export default async function Home({ 
   searchParams,
@@ -14,6 +13,7 @@ export default async function Home({
   const query = (await searchParams).query;
   const params = { search: query || null };
   const { data: products } = await sanityFetch({ query: PRODUCT_QUERY, params });
+  console.log(products? `Products: ${products}` : "Error: products not found")
 
   return (
     <>
@@ -29,8 +29,8 @@ export default async function Home({
 
         <ul className="mt-7 card_grid">
           {products?.length > 0 ? (
-            products.map((product: Product) => (
-              <ProductCard key={product?._id} product={product} />
+            products.map((product: Product ) => (
+              <ProductCard key={product?._id} product={product}/>
             ))
 
           ) : (
@@ -39,8 +39,6 @@ export default async function Home({
         </ul>
 
       </section>
-
-      <FooterBanner />
 
       <SanityLive />
     </>

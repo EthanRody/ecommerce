@@ -13,6 +13,34 @@
  */
 
 // Source: schema.json
+export type Product = {
+  _id: string;
+  _type: "product";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  name?: string;
+  description?: string;
+  descriptionLong?: string;
+  sales?: number;
+  stock?: number;
+  price?: number;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  categories?: string;
+};
+
 export type SanityImagePaletteSwatch = {
   _type: "sanity.imagePaletteSwatch";
   background?: string;
@@ -118,6 +146,12 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
 export type SanityAssetSourceData = {
   _type: "sanity.assetSourceData";
   name?: string;
@@ -125,27 +159,5 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type Product = {
-  _id: string;
-  _type: "product";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  slug?: Slug;
-  name?: string;
-  description?: string;
-  sales?: number;
-  stock?: number;
-  price?: number;
-  image?: string;
-  categories?: string;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
-
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | SanityAssetSourceData | Product | Slug;
+export type AllSanitySchemaTypes = Product | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;

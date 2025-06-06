@@ -1,10 +1,11 @@
-import { DollarSignIcon } from "lucide-react"
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Product } from "@/sanity/types";
+import Image from "next/image";
+import { urlFor } from "@/sanity/lib/image";
 
 const ProductCard = ({ product }: { product: Product}) => {
-  const { name, description, stock, price, image, categories } = product;
+  const { name, description, stock, price, image, categories, slug } = product;
   const categoriesList = categories? categories.split(',').map(item => item.trim()) : [];
 
   return (
@@ -13,17 +14,34 @@ const ProductCard = ({ product }: { product: Product}) => {
             <p className="product_card_date text-20-medium">
                 {stock} Remaining
             </p>
-            <div className="flex gap-1.5">
-                <DollarSignIcon className="size-6 text-primary" />
-                <span className="text-20-medium">{price}</span>
-
-            </div>
+            <span className="text-26-semibold">${price}</span>
         </div>
 
-        <h2 className="text-30-semibold">{name}</h2>
-        <p>{description}</p>
+        <Link href={`/product/${slug? slug.current : "no-link"}`}>
+          <h2 className="text-30-semibold">{name}</h2>
+        </Link>
 
-        <img src={image} alt="placeholder" className="product-card_img" />
+        {/* Image with hover effect container */}
+        <div className="relative overflow-hidden group">
+          <Link href={`/product/${slug? slug.current : "no-link"}`}>
+            {image && (
+              <Image 
+                src={urlFor(image).url()} 
+                alt="Product image"
+                width={300}
+                height={300}
+                className="product-card_img transition-transform duration-300"
+              />
+            )}
+            {/* Semi-transparent overlay with description */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 duration-100 flex items-center justify-center p-4 rounded-[10px]">
+              <p className="text-white text-center text-lg font-medium backdrop-blur-md bg-black/30 px-4 py-2 rounded-lg">
+                {description}
+              </p>
+            </div>
+          </Link>
+        </div>
+        
         
         <div className="flex-between gap-3 mt-5">
           {(categoriesList?.length > 0 && (
